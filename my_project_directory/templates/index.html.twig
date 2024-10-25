@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for pokemon in pokemons %}
+        <div class="card">
+            <h1>Pokemon id : {{ pokemon.id }}</h1>
+            <h2>Pokemon name : {{ pokemon.name }}</h2>
+            <p>Pokemon type : {{ pokemon.type }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
