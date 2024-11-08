@@ -1,3 +1,23 @@
 body {
-    background-color: skyblue;
+    background-color: #f8f9fa;
+}
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+tr:hover {
+    background: #d6d6d6;
+}
+
+h1, h2 {
+    color: #34495e;
+}
+
+.btn {
+    border-radius: 20px;
 }

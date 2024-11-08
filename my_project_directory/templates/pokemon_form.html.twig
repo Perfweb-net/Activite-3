@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ pokemon.id ? 'Modifier le Pokémon' : 'Nouveau Pokémon' }}{% endblock %}
+
+{% block body %}
+    <h2>{{ pokemon.id ? 'Modifier' : 'Créer un nouveau' }} Pokémon</h2>
+    {{ form_start(form) }}
+    {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
+    <button type="submit" class="btn btn-success mt-3">{{ pokemon.id ? 'Mettre à jour' : 'Créer' }}</button>
+    {{ form_end(form) }}
+    <a href="{{ path('home') }}" class="btn btn-secondary mt-2">Annuler</a>
+{% endblock %}

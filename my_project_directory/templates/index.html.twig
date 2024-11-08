@@ -1,11 +1,63 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Liste des Pokémon{% endblock %}
+
 {% block body %}
-    {% for pokemon in pokemons %}
-        <div class="card">
-            <h1>Pokemon id : {{ pokemon.id }}</h1>
-            <h2>Pokemon name : {{ pokemon.name }}</h2>
-            <p>Pokemon type : {{ pokemon.type }}</p>
+    <form method="get" action="{{ path('home') }}" class="form-inline mb-3">
+        <input type="text" name="name" class="form-control mr-2" placeholder="Nom du Pokémon" value="{{ name }}">
+        <select name="type" class="form-control mr-2">
+            <option value="">Type</option>
+            <option value="eau" {% if type == 'eau' %}selected{% endif %}>Eau</option>
+            <option value="feu" {% if type == 'feu' %}selected{% endif %}>Feu</option>
+            <option value="plante" {% if type == 'plante' %}selected{% endif %}>Plante</option>
+            <option value="electrique" {% if type == 'electrique' %}selected{% endif %}>Électrique</option>
+            <option value="flemme" {% if type == 'flemme' %}selected{% endif %}>Flemme</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+
+        <div>
+            <a class="btn btn-secondary ml-2" href="{{ path('pokemon_new') }}">Créer un nouveau Pokémon</a>
         </div>
-    {% endfor %}
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pokemon in pokemons %}
+            <tr>
+                <td>{{ pokemon.name }}</td>
+                <td>{{ pokemon.type }}</td>
+                <td>
+                    <a href="{{ path('pokemon_show', {id: pokemon.id}) }}" class="btn btn-info btn-sm">Voir</a>
+                    <a href="{{ path('pokemon_edit', {id: pokemon.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <form method="post" action="{{ path('pokemon_delete', {id: pokemon.id}) }}"
+                          style="display: inline-block;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pokemon.id) }}">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Voulez-vous vraiment supprimer ce Pokémon ?');">Supprimer
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Pagination">
+        <ul class="pagination">
+            {% if totalPages > 1 %}
+                {% for page in 1..totalPages %}
+                    <li class="page-item {% if page == currentPage %}active{% endif %}">
+                        <a class="page-link" href="{{ path('home', {page: page}) }}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </nav>
 {% endblock %}
